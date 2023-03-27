@@ -1,6 +1,8 @@
 package jpabook.jpashop.domain;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,5 +24,10 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
+    @Builder
+    public Member(String name, Address address) {
+        this.name = name;
+        this.address = address;
+    }
 
 }
