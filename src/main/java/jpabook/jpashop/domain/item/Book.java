@@ -1,6 +1,7 @@
 package jpabook.jpashop.domain.item;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.persistence.DiscriminatorValue;
