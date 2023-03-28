@@ -21,4 +21,12 @@ public class Delivery {
     // 순서와 상관없도록 STRING으로 세팅
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 }
