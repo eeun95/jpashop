@@ -2,6 +2,7 @@ package jpabook.jpashop.domain.item;
 
 import jpabook.jpashop.domain.Category;
 import jpabook.jpashop.exception.NotEnoughStockException;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 // 상속관계 전략 (한 테이블에 item을 상속받은 모든 컬럼들을 다 넣음)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class Item {
@@ -24,6 +26,8 @@ public abstract class Item {
     private int price;
 
     private int stockQuantity;
+
+    protected Item() {}
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();

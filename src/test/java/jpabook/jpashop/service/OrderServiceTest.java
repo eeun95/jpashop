@@ -6,7 +6,7 @@ import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Item;
-import jpabook.jpashop.dto.MemberDto;
+import jpabook.jpashop.dto.MemberForm;
 import jpabook.jpashop.exception.NotEnoughStockException;
 import jpabook.jpashop.repository.OrderRepository;
 import org.junit.Assert;
@@ -87,16 +87,17 @@ class OrderServiceTest {
     }
 
     private Member createMember() {
-        Member member = new MemberDto("seo", new Address("경기", "경수대로", "462")).toEntity();
+        Member member = new MemberForm("seo", "경기", "경수대로", "462").toEntity();
         em.persist(member);
         return member;
     }
 
     private Book createBook() {
-        Book book = new Book();
-        book.setName("시골 JPA");
-        book.setPrice(10000);
-        book.setStockQuantity(10);
+        Book book = Book.builder()
+                .name("시골 JPA")
+                .price(10000)
+                .stockQuantity(10)
+                .build();
         em.persist(book);
         return book;
     }
