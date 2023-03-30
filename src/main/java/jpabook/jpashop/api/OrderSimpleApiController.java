@@ -1,16 +1,12 @@
 package jpabook.jpashop.api;
 
-import javassist.Loader;
 import jpabook.jpashop.domain.Address;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.dto.OrderSearch;
-import jpabook.jpashop.dto.OrderSimpleQueryDto;
+import jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryDto;
 import jpabook.jpashop.repository.OrderRepository;
-import jpabook.jpashop.service.ItemService;
-import jpabook.jpashop.service.MemberService;
-import jpabook.jpashop.service.OrderService;
-import lombok.AllArgsConstructor;
+import jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +27,8 @@ import java.util.stream.Collectors;
 public class OrderSimpleApiController {
 
     private final OrderRepository orderRepository;
+
+    private final OrderSimpleQueryRepository orderSimpleQueryRepository;
 
     @GetMapping("/api/v1/simple-orders")
     public List<Order> ordersV1() {
@@ -62,6 +60,7 @@ public class OrderSimpleApiController {
                 .collect(Collectors.toList());
     }
 
+    //외부의 모습을 건드리지 않고 내부의 원하는 것만 페치조인으로 튜닝
     @GetMapping("/api/v3/simple-orders")
     public List<SimpleOrderDto> ordersV3() {
         return orderRepository.findAllWithMemberDelivery().stream()
@@ -69,9 +68,14 @@ public class OrderSimpleApiController {
                 .collect(Collectors.toList());
     }
 
+    // 쿼리를 짜듯이 원하는 걸 가져옴 네트워크는 덜 사용하지만 재사용성 X
+    // 장점 : 성능 최적화 / 단점 : 로직 재활용 불가
+    // 대부분의 성능은 전체적인 애플리케이션 관점에서 볼 때 컬럼 몇개 뺀다고 해서 크게 좋아지고 그러진 않는다 (효과 미비)
+    // 엄청난 트래픽이 들어오는 API라면 고민할 필요는 있음 알맞게 사용하기
     @GetMapping("/api/v4/simple-orders")
     public List<OrderSimpleQueryDto> orderV4() {
-        return orderRepository.findOrderDtos();
+        // 레포지토리 : 엔티티에 대한 객체 그래프를 조회 != API 스펙에 맞춰 구성, 논리적으로 계층이 다깨져있음
+        return orderSimpleQueryRepository.findOrderDtos();
     }
 
     @Data
