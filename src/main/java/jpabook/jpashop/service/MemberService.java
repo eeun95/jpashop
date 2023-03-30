@@ -46,4 +46,15 @@ public class MemberService {
     public Member findById(Long id) {
         return memberRepository.findOne(id);
     }
+
+    @Transactional
+    public void update(Long id, String name) {
+        Member member = memberRepository.findOne(id);
+        member.setName(name);
+
+        // 이 member를 리턴하면 이미 영속상태가 끊긴 member를 반환하게 됨
+        // update (변경성 메서드) 실행 한 id를 가지고 다시 조회하는 꼴이 된다
+        // 커맨드와 쿼리가 함께 존재
+        // 가급적 update만 하고 끝 id까지는 okok
+    }
 }

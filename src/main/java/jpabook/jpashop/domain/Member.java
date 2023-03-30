@@ -1,11 +1,13 @@
 package jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,8 @@ public class Member {
     @Embedded
     private Address address;
 
+    //@JsonIgnore
+    // 엔티티에 프레젠테이션 계층을 위한 로직이 추가되어버림 X X X
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
@@ -32,4 +36,7 @@ public class Member {
         this.address = address;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 }
