@@ -1,9 +1,11 @@
 package jpabook.jpashop.api;
 
+import javassist.Loader;
 import jpabook.jpashop.domain.Address;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.dto.OrderSearch;
+import jpabook.jpashop.dto.OrderSimpleQueryDto;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.service.ItemService;
 import jpabook.jpashop.service.MemberService;
@@ -59,6 +61,19 @@ public class OrderSimpleApiController {
                 .map(SimpleOrderDto::new)
                 .collect(Collectors.toList());
     }
+
+    @GetMapping("/api/v3/simple-orders")
+    public List<SimpleOrderDto> ordersV3() {
+        return orderRepository.findAllWithMemberDelivery().stream()
+                .map(SimpleOrderDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/api/v4/simple-orders")
+    public List<OrderSimpleQueryDto> orderV4() {
+        return orderRepository.findOrderDtos();
+    }
+
     @Data
     static class SimpleOrderDto {
         private Long orderId;
