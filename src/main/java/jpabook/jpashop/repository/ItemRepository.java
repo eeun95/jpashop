@@ -19,6 +19,8 @@ public class ItemRepository {
             em.persist(item);
         } else {
             // update와 비슷
+            // 영속성 컨텍스트에서 item을 찾아 데이터를 바꿈
+            // 파라미터로 받은 item은 준영속 상태, merge하여 나온 반환값이 영속 상태
             em.merge(item);
         }
     }

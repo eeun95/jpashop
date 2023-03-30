@@ -1,26 +1,24 @@
 package jpabook.jpashop.domain.item;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@Getter
+@Getter @Setter
 @DiscriminatorValue("B")
 public class Book extends Item {
 
     private String author;
     private String isbn;
 
-    protected Book () {}
+    public Book () {}
 
     @Builder
-    public Book(String name, int price, int stockQuantity, String author, String isbn) {
+    public Book(Long id, String name, int price, int stockQuantity, String author, String isbn) {
+        super.setId(id);
         super.setName(name);
         super.setPrice(price);
         super.setStockQuantity(stockQuantity);

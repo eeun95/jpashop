@@ -10,6 +10,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotEmpty;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberForm {
