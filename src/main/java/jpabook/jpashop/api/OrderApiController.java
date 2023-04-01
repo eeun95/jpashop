@@ -111,6 +111,15 @@ public class OrderApiController {
 
     @GetMapping("/api/v4/orders")
     public List<OrderQueryDto> ordersV4() {
+        // ToOne 관계들을 먼저 조회하고 ToMany 관계는 각각 별도 처리
+        // ToOne 관계는 조인해도 데이터 row 수가 증가하지 않지만 ToMany는 증가함
+        // 최적화 하기 어려운 ToMany는 별도의 메서드를 만들어 처리
+        // N+1 문제 발생
         return orderQueryRepository.findOrderQueryDtos();
+    }
+
+    @GetMapping("/api/v5/orders")
+    public List<OrderQueryDto> ordersV5() {
+        return orderQueryRepository.findAllByDto_optimization();
     }
 }
