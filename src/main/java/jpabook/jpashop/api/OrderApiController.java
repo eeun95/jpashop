@@ -6,6 +6,7 @@ import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.dto.OrderSearch;
 import jpabook.jpashop.repository.OrderRepository;
+import jpabook.jpashop.repository.order.query.OrderFlatDto;
 import jpabook.jpashop.repository.order.query.OrderQueryDto;
 import jpabook.jpashop.repository.order.query.OrderQueryRepository;
 import lombok.Data;
@@ -121,5 +122,11 @@ public class OrderApiController {
     @GetMapping("/api/v5/orders")
     public List<OrderQueryDto> ordersV5() {
         return orderQueryRepository.findAllByDto_optimization();
+    }
+    @GetMapping("/api/v6/orders")
+    public List<OrderFlatDto> ordersV6() {
+        // 장점 : 한방 쿼리
+        // 단점 : 우리가 원했던 페이징이 아님 (order 기준이면 orderItems 기준으로 데이터가 뽑힘)
+        return orderQueryRepository.findAllByDto_flat();
     }
 }
