@@ -12,6 +12,10 @@ spring:
       hibernate:
 #        show_sql: true
         format_sql: true
+        default_batch_fetch_size: 4
+        # 사이즈는 100~1000 사이를 선택하는 것을 권장
+        # 이 전략은 SQL IN 절을 사용하는데 DB에 따라 IN 절 파라미터를 1000으로 제한하기도 함
+        # 1000으로 잡으면 한번에 1000개를 DB에서 애플리케이션에 불러오므로 DB 에 순간 부하 증가할 수 있음
 
 logging.level:
   org.hibernate.SQL: debug

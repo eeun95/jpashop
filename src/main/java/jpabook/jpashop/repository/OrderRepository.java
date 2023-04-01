@@ -84,5 +84,27 @@ public class OrderRepository {
                 "join fetch o.member m " +
                 "join fetch o.delivery d", Order.class).getResultList();
     }
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return em.createQuery("select o from Order o " +
+                "join fetch o.member m " +
+                "join fetch o.delivery d", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
 
+    // 1. DB distinct 실행
+    // 2. 루트(Order) 엔티티가 중복일 경우 중복 제거 후 컬렉션에 담음
+    public List<Order> findAllWithItem() {
+        return em.createQuery("select distinct o from Order o " +
+                "join fetch o.member m " +
+                "join fetch o.delivery d " +
+                "join fetch o.orderItems oi " +
+                "join fetch oi.item i", Order.class)
+                //.setFirstResult(1)
+                //.setMaxResults(100)
+                // firstResult/maxResults specified with collection fetch; applying in memory!
+                // 메모리에서 sorting 모든 데이터를 애플리케이션에 담아 페이징 처리한다고 경고. out of memory 발생
+                .getResultList();
+    }
 }

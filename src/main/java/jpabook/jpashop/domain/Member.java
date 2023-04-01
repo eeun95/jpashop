@@ -25,7 +25,7 @@ public class Member {
     @Embedded
     private Address address;
 
-    //@JsonIgnore
+    @JsonIgnore
     // 엔티티에 프레젠테이션 계층을 위한 로직이 추가되어버림 X X X
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
