@@ -17,7 +17,7 @@ public class MemberRepository {
     private EntityManager em;
      */
 
-    // 스프링 데이터 JPA가 아니면 @PersistenceContext 사용해야함 (지웡능ㄹ 안해주기 때문)
+    // 스프링 데이터 JPA가 아니면 @PersistenceContext 사용해야함 (지원을 안해주기 때문)
     private final EntityManager em;
 
 

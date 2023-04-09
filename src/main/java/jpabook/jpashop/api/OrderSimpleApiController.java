@@ -86,7 +86,7 @@ public class OrderSimpleApiController {
         private OrderStatus orderStatus;
         private Address address;
 
-        // DTO가 엔티티로 파라미터 받는 것은 크게 문제가 되지 않음
+        // DTO가 엔티티를 파라미터로 받는 것은 크게 문제가 되지 않음
         public SimpleOrderDto(Order order) {
             orderId = order.getId();
             name = order.getMember().getName();             // 영속성 컨텍스트가 디비에서 찾아옴
